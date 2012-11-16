@@ -8,8 +8,8 @@ def get_debian_postgres_version
 end
 
 def get_redhat_postgres_version
-  version = Facter::Util::Resolution.exec('yum info postgresql-server |grep "^Version"')
-  if match = /^Version\s*:\s*(\d+\.\d+).*$/.match(version)
+  version = Facter::Util::Resolution.exec('repoquery --queryformat "%{version}" postgresql-server')
+  if match = /^(\d+\.\d+).*$/.match(version)
     match[1]
   else
     nil
